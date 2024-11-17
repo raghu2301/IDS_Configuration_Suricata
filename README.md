@@ -100,6 +100,6 @@ sudo nano eve.json
 sudo nano fast.log
 ```
 ## Conclusion
-IDS plays a vital role in enhancing an organization's cybersecurity posture. IDS focuses on detecting threats and providing visibility. 
+Intrusion Detection Systems (IDS) play a critical role in enhancing the security of modern networks and information systems. By monitoring network traffic and system activities for signs of malicious behavior or policy violations, IDSs provide an essential layer of defense against cyber threats. They help organizations to identify vulnerabilities, respond to incidents promptly, and mitigate potential damage caused by attacks.
 
 
