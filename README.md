@@ -1,8 +1,13 @@
 # IDS_Configuration_Suricata
 ## Overview
+In this repository we will learn about IDS and how to configure it on suricata.
+
 **Intrusion Detection System (IDS)**
+
 **Definition:**
+
 An IDS is a monitoring system designed to detect suspicious activities or policy violations within a network or system. It does not take direct action to stop threats but instead alerts administrators to potential security incidents.
+
 **Key Features:**
 - **Passive Monitoring:** IDS operates by analyzing network traffic or system logs for malicious patterns.
 - **Alerting:** It generates alerts when suspicious activities are detected, enabling administrators to investigate further.
