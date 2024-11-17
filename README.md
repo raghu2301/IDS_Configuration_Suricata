@@ -99,3 +99,7 @@ sudo nano eve.json
 ```
 sudo nano fast.log
 ```
+## Conclusion
+IDS plays a vital role in enhancing an organization's cybersecurity posture. IDS focuses on detecting threats and providing visibility. 
+
+
