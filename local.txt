@@ -1,0 +1,56 @@
+ ICMP (Ping) Detection
+alert icmp any any -> any any (msg:"ICMP Echo Request Detected"; itype:8; sid:1000001; rev:1;)
+alert icmp any any -> any any (msg:"ICMP Echo Reply Detected"; itype:0; sid:1000002; rev:1;)
+
+# SSH Detection
+alert tcp any any -> any 22 (msg:"SSH Connection Detected"; flow:to_server,established; sid:1000003; rev:1;)
+alert tcp any any -> any 22 (msg:"Possible SSH Brute Force Attempt"; flow:to_server,established; threshold:type both, track by_src, count 5, seconds 60; sid:1000004; rev:1;)
+
+# Telnet Detection
+alert tcp any any -> any 23 (msg:"Telnet Connection Detected"; flow:to_server,established; sid:1000005; rev:1;)
+
+# FTP Detection
+alert tcp any any -> any 21 (msg:"FTP Connection Detected"; flow:to_server,established; sid:1000006; rev:1;)
+alert tcp any any -> any 21 (msg:"Possible FTP Brute Force Attempt"; flow:to_server,established; threshold:type both, track by_src, count 5, seconds 60; sid:1000007; rev:1;)
+
+# Nmap Detection
+alert tcp any any -> any any (msg:"Nmap SYN Scan Detected"; flags:S; threshold:type limit, track by_src, count 10, seconds 60; sid:1000008; rev:1;)
+alert tcp any any -> any any (msg:"Nmap XMAS Scan Detected"; flags:FPU; sid:1000009; rev:1;)
+alert tcp any any -> any any (msg:"Nmap NULL Scan Detected"; flags:0; sid:1000010; rev:1;)
+alert tcp any any -> any any (msg:"Nmap FIN Scan Detected"; flags:F; sid:1000011; rev:1;)
+alert tcp any any -> any any (msg:"Nmap ACK Scan Detected"; flags:A; sid:1000012; rev:1;)
+alert udp any any -> any any (msg:"Nmap UDP Scan Detected"; threshold:type limit, track by_src, count 10, seconds 60; sid:1000013; rev:1;)
+alert tcp any any -> any any (msg:"Nmap OS Scan Detected"; pcre:"/Nmap/"; sid:1000014; rev:1;)
+alert tcp any any -> any any (msg:"Nmap Service Version Detection Probes Detected"; pcre:"/Service scan|Version scan/"; sid:1000015; rev:1;)
+alert tcp any any -> any any (msg:"Nmap TCP Connect Scan Detected"; flags:S; flow:stateless; threshold:type limit, track by_src, count 10, seconds 60; sid:1000016; rev:1;)
+alert ip any any -> any any (msg:"Nmap IP Protocol Scan Detected"; ip_proto:1; sid:1000017; rev:1;)
+
+# Metasploit Detection
+alert tcp any any -> any any (msg:"Metasploit NOP Sled Detected"; content:"|90 90 90 90|"; sid:1000018; rev:1;)
+alert tcp any any -> any any (msg:"Metasploit Reverse Shell Detected"; flow:established,to_server; content:"/bin/bash"; sid:1000019; rev:1;)
+
+# SQLMap Detection
+#alert http any any -> any any (msg:"SQL Injection Attempt - SQLMap Pattern Detected"; flow:to_server,established; content:"' OR '1'='1"; nocase; http.uri; classtype:web-application-attack; sid:1000020; rev:1;)
+#alert http any any -> any any (msg:"SQLMap User-Agent Detected"; flow:to_server,established; http.user_agent; content:"sqlmap"; nocase; sid:1000021; rev:1;)
+
+# Burp Suite Detection
+#alert http any any -> any any (msg:"Burp Suite User-Agent Detected"; flow:to_server,established; http.user_agent; content:"BurpSuite"; nocase; sid:1000022; rev:1;)
+#alert http any any -> any any (msg:"Burp Suite Fuzzing Detected"; flow:to_server,established; content:"|27| OR 1=1"; nocase; http.uri; classtype:web-application-attack; sid:1000023; rev:1;)
+
+# ZAP Detection
+alert http any any -> any any (msg:"ZAP Proxy Detected"; flow:to_server,established; content:"User-Agent: ZAP"; http_header; classtype:web-application-attack; sid:1000024; rev:1;)
+
+# DirBuster Detection
+alert http any any -> any any (msg:"DirBuster Scan Detected"; flow:to_server,established; content:"User-Agent: DirBuster"; http_header; classtype:web-application-attack; sid:1000025; rev:1;)
+
+# BeEF Detection
+#alert http any any -> any any (msg:"BeEF Hook Detected"; flow:to_server,established; content:"/hook.js"; http.uri; classtype:web-application-attack; sid:1000026; rev:1;)
+
+# DoS/DDoS Detection
+#alert tcp any any -> any any (msg:"Potential SYN Flood Detected"; flags:S; threshold:type both, track by_src, count 50, seconds 1; classtype:network-attack; sid:1000027; rev:1;)
+#alert icmp any any -> any any (msg:"Potential ICMP Flood Detected"; threshold:type both, track by_src, count 100, seconds 1; classtype:network-attack; sid:1000028; rev:1;)
+#alert udp any any -> any any (msg:"Potential UDP Flood Detected"; threshold:type both, track by_src, count 200, seconds 1; classtype:network-attack; sid:1000029; rev:1;)
+#alert udp any 53 -> any any (msg:"Potential DNS Amplification Attack"; content:"|00 01|"; offset:2; depth:2; byte_test:2,>,256,offset 10; threshold:type both, track by_src, count 50, seconds 1; classtype:network-attack; sid:1000030; rev:1;)
+
+# Brute Force Detection (General)
+alert tcp any any -> any any (msg:"Potential Brute Force Attack Detected"; flow:to_server,established; threshold:type both, track by_src, count 10, seconds 60; classtype:attempted-recon; sid:1000031; rev:1;)
